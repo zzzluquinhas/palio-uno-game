@@ -1,11 +1,11 @@
-# 2022-1-TN-grupo07 - Jogo de Cartas - Palio
+# Jogo de Cartas - Palio
 
 ![Imgur](https://imgur.com/PUgv6kp.jpg)
 
 ## Descrição do projeto 
 
 <p align="justify">
-  O projeto tem como objetivo implementar um jogo de cartas em C++ utilizando os conceitos vistos na disciplina <i>Programação e Desenvolvimento de Software II</i>, tais como POO, modularidade e corretude.
+  O projeto tem como objetivo implementar um jogo de cartas em C++ utilizando os conceitos de POO, modularidade e corretude vistos na disciplina <i>Programação e Desenvolvimento de Software II</i> do curso de Ciência da Computação da UFMG.
 </p>
 <p align="justify">
   Escolhemos trabalhar com o jogo "Palio" (nossa própria versão do Uno), e, além de trabalhar com as regras básicas, também utilizamos regras especiais para deixar o jogo mais interessante.
