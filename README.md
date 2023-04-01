@@ -5,7 +5,7 @@
 ## Descrição do projeto 
 
 <p align="justify">
-  O projeto tem como objetivo implementar um jogo de cartas em C++ utilizando os conceitos vistos na disciplina _Programação e Desenvolvimento de Software II_, tais como POO, modularidade e corretude.
+  O projeto tem como objetivo implementar um jogo de cartas em C++ utilizando os conceitos vistos na disciplina <i>Programação e Desenvolvimento de Software II</i>, tais como POO, modularidade e corretude.
 </p>
 <p align="justify">
   Escolhemos trabalhar com o jogo "Palio" (nossa própria versão do Uno), e, além de trabalhar com as regras básicas, também utilizamos regras especiais para deixar o jogo mais interessante.
