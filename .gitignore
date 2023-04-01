@@ -1,0 +1,10 @@
+# Specify filepatterns you want git to ignore.
+
+*.gch
+a.out
+*.o
+*.log
+*.json
+*.gcda
+*.gcno
+PALIO
