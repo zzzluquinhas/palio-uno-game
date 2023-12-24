@@ -54,6 +54,6 @@
 
 Grupo responsável pelo desenvolvimento do projeto:
 
-| [<img src="https://imgur.com/rRN1YyG.jpg" width=115><br><sub>Filipe Araújo</sub>](https://github.com/arflipe) |  [<img src="https://imgur.com/hu1zCLS.jpg" width=115><br><sub>Iasmin Araújo</sub>](https://github.com/iasminaraujoc) |  [<img src="https://imgur.com/35uY87m.jpg" width=115><br><sub>Lucas Almeida</sub>](https://github.com/tekukas) |  [<img src="https://imgur.com/cTivIvi.jpg" width=115><br><sub>Matheus Rocha</sub>](https://github.com/rochamatheux) |  [<img src="https://imgur.com/eMwyINx.jpg" width=115><br><sub> Thais Ferreira</sub>](https://github.com/thaisfds) |  
+| [<img src="https://imgur.com/rRN1YyG.jpg" width=115><br><sub>Filipe Araújo</sub>](https://github.com/arflipe) |  [<img src="https://imgur.com/hu1zCLS.jpg" width=115><br><sub>Iasmin Araújo</sub>](https://github.com/iasminaraujoc) |  [<img src="https://imgur.com/35uY87m.jpg" width=115><br><sub>Lucas Almeida</sub>](https://github.com/zzzluquinhas) |  [<img src="https://imgur.com/cTivIvi.jpg" width=115><br><sub>Matheus Rocha</sub>](https://github.com/rochamatheux) |  [<img src="https://imgur.com/eMwyINx.jpg" width=115><br><sub> Thais Ferreira</sub>](https://github.com/thaisfds) |  
 | :---: | :---: | :---: | :---: | :---: 
 
