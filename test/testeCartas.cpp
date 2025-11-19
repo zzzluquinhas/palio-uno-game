@@ -242,3 +242,24 @@ TEST_CASE("GetCor, carta especial"){
 	CHECK_FALSE(c1->getCor() == Cor::VERMELHO);
 	delete c1;
 }
+
+TEST_CASE("GetNumero, carta normal"){
+	CartaNormal c1 = CartaNormal(7, Cor::VERMELHO);
+
+	CHECK(c1.getNumero() == 7);
+}
+
+TEST_CASE("Construtor carta genérica"){
+	Carta c1 = Carta();
+
+	CHECK(c1.getID() == -1);
+	CHECK(c1.getCor() == Cor::BRANCO);
+}
+
+TEST_CASE("setDescricaoCarta e getDescricaoCarta"){
+	Carta c1 = Carta();
+	c1.setDescricaoCarta("Carta de Teste");
+
+	CHECK(c1.getDescricaoCarta() == "Carta de Teste");
+}
+
