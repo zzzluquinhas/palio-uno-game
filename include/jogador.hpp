@@ -5,6 +5,7 @@
 #include "cartaNormal.hpp"
 #include <vector>
 #include <algorithm>
+#include <limits>
 
 class Jogador{
 	private:
