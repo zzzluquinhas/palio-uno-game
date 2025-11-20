@@ -1,21 +1,69 @@
-name: C/C++ CI
+name: Testes e Cobertura de Código
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - master
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: test
-      run: make clean
-           cd test
-           make clean
-           make link
-           make run
+    - name: ⬇️ Checkout do Código
+      uses: actions/checkout@v4
+
+    - name: ⚙️ Instalar gcovr e dependências de C++
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcovr build-essential
+
+    # O diretório de trabalho agora é definido para ./test
+    - name: 🔨 Compilar e Linkar (make clean, make link)
+      working-directory: ./test
+      run: |
+        echo "Executando make clean e make link dentro de ./test"
+        make clean
+        make link
+
+    # O diretório de trabalho é mantido em ./test
+    - name: ▶️ Rodar Testes (make run) e Verificar Sucesso
+      working-directory: ./test
+      run: |
+        # Executa o make run (que deve gerar o ./PALIO no diretório de build)
+        # E salva a saída para inspeção
+        make run 2>&1 | tee test_output.log
+        
+        # Verifica se o doctest reportou sucesso
+        if grep -q "Status: SUCCESS!" test_output.log; then
+          echo "Testes do Doctest executados com sucesso!"
+        else
+          echo "ERRO: Testes do Doctest falharam ou o status não foi encontrado."
+          exit 1
+        fi
+        
+    # O comando gcovr deve ser capaz de localizar os arquivos de cobertura
+    # usando os caminhos relativos ao diretório onde o make run foi executado.
+    - name: 📊 Gerar Relatório de Cobertura (gcovr)
+      working-directory: ./test
+      run: |
+        # O comando gcovr usa caminhos relativos ao diretório atual (./test)
+        # Para acessar o diretório de build (../build) e os arquivos fonte (../src/objects)
+        echo "Gerando resumo de cobertura..."
+        gcovr --print-summary ../build -r ../src/objects
+        
+        # Opcional: Gerar um relatório XML para publicação
+        gcovr --xml --output coverage.xml ../build -r ../src/objects
+
+    # --- Etapa Opcional: Publicar o Relatório de Cobertura ---
+    - name: 📤 Publicar Cobertura
+      uses: codecov/codecov-action@v4
+      with:
+        # O arquivo coverage.xml deve estar em ./test/coverage.xml
+        files: ./test/coverage.xml
+        fail_ci_if_error: true
