@@ -65,5 +65,6 @@ jobs:
       uses: codecov/codecov-action@v4
       with:
         # O arquivo coverage.xml deve estar em ./test/coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
         files: ./test/coverage.xml
         fail_ci_if_error: true
