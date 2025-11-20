@@ -1,5 +1,6 @@
 #include"jogador.hpp"
 #include "excecoes.hpp"
+#include <limits>
 
 //Contrutor do jogador recebe apenas o nome do jogador
 Jogador::Jogador(string nome){
