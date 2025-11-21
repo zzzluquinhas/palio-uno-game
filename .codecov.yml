@@ -1,0 +1,4 @@
+coverage:
+  ignore:
+    - "src/objects/menuInicial.cpp"
+    - "src/objects/menuAjuda.cpp"
