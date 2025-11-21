@@ -426,6 +426,79 @@ DOCTEST_TEST_SUITE("Mesa Class Tests") {
         CHECK(mesa.getLixo().back()->getCor() == Cor::VERDE);
     }
 
+	DOCTEST_TEST_CASE("Vencedor Imediato (Jogador ja inicia sem cartas)") {
+        std::vector<Jogador*> jogadores;
+        Jogador* p1 = new Jogador("Vencedor");
+        jogadores.push_back(p1);
+        jogadores.push_back(new Jogador("Perdedor"));
+        std::vector<Regra*> regras;
+        
+        { // ESCOPO DA MESA: Garante que a Mesa morre antes dos jogadores
+            Mesa mesa(jogadores, regras);
+            
+            // Força condição de vitória: P1 tem 0 cartas
+            p1->limparCartas(); 
+            // Garante que o outro jogador tenha cartas para não ser o vencedor acidental
+            jogadores[1]->adicionarCarta(new CartaNormal(1, Cor::AZUL));
+            
+            // Executa
+            Jogador* ganhador = mesa.gerenciarPartida();
+            
+            // Verifica
+            CHECK(ganhador->getNome() == "Vencedor");
+        } // Mesa destruída aqui
+
+        // Cleanup seguro
+        delete p1;
+        delete jogadores[1];
+    }
+
+    DOCTEST_TEST_CASE("Vencedor Apos Um Turno (Fluxo Completo)") {
+        std::vector<Jogador*> jogadores;
+        Jogador* p1 = new Jogador("Jog1");
+        jogadores.push_back(p1);
+        jogadores.push_back(new Jogador("Jog2"));
+        std::vector<Regra*> regras;
+        
+        { // ESCOPO DA MESA
+            Mesa mesa(jogadores, regras);
+            
+            // Define o jogador atual como o Jog1
+            mesa.posJogadorAtual = 0;
+            
+            // Limpeza para garantir estado conhecido
+            p1->limparCartas();
+            for(auto c : mesa.lixo) delete c;
+            mesa.lixo.clear();
+            
+            // Configura Lixo: Carta Vermelha 5
+            mesa.lixo.push_back(new CartaNormal(5, Cor::VERMELHO));
+            
+            // Configura Mão P1: Carta Vermelha 9 (Compatível) na posição 0
+            p1->adicionarCarta(new CartaNormal(9, Cor::VERMELHO));
+            
+            // Configura Mão P2: Cartas extras para ele não ganhar
+            jogadores[1]->adicionarCarta(new CartaNormal(1, Cor::AZUL));
+
+            // SIMULAÇÃO DE INPUT:
+            // "x\n" -> Consumido pelos dois cin.ignore() (pausa do "digite enter")
+            // "0\n" -> Consumido por jogador->jogarCarta() (escolhe a carta de índice 0)
+            CIN_Redirect redirect("x\n0\n");
+            
+            // Executa
+            Jogador* ganhador = mesa.gerenciarPartida();
+            
+            // Verificações
+            CHECK(ganhador->getNome() == "Jog1"); // Retornou o jogador correto
+            CHECK(p1->getNumeroDeCartas() == 0);  // Jogador realmente jogou a carta
+            CHECK(mesa.lixo.back()->getID() == 9); // A carta jogada está no topo do lixo
+        } // Mesa destruída aqui
+
+        // Cleanup seguro
+        delete p1;
+        delete jogadores[1];
+    }
+
 	DOCTEST_TEST_SUITE("Mesa Class Tests - Cobertura Estendida") {
 
 		// Cobertura: linhas 240-242 (Switch default em receberCartaDoJogador)
