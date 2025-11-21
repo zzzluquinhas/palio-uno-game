@@ -42,7 +42,7 @@ link: compile
 run:
 	@printf "\033[36mRunning executable file:\033[0m\n"
 	./$(EXEC)
-	gcovr --print-summary $(OBJDIR) -r $(SECONDARY_SRCDIR)
+	gcovr --print-summary $(OBJDIR) -r $(SECONDARY_SRCDIR) --exclude "../src/objects/menuInicial.cpp" --exclude "../src/objects/menuAjuda.cpp"
 
 #Clean build and executable files
 .PHONY : clean
