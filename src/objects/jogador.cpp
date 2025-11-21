@@ -229,7 +229,7 @@ bool Jogador::querFazerIsso(string fazerIsso){
 			respostaEhValida = false;
 		}
 	} while(!respostaEhValida);
-	system("cls||clear");
+	system("clear||cls");
 	if(tolower(resposta) == 's'){
 		return true;
 	}

@@ -137,7 +137,7 @@ Jogador* Mesa::gerenciarPartida(){
 }
 
 void Mesa::printarInfo(){
-	system("cls||clear");
+	system("clear||cls");
 	cout << "Número de cartas dos jogadores:" << endl;
 	for(Jogador* j : this->jogadores){
 		cout << j->getNome() << ": " << j->getNumeroDeCartas() << "\t";
@@ -156,7 +156,7 @@ void Mesa::gerenciarTurno(Jogador* jogadorAtual){
 		if(this->baralho.size() > 0){
 			Carta* ultimaDoBaralho = this->baralho.back();
 			distribuirCarta(jogadorAtual, ultimaDoBaralho);
-			system("cls||clear");
+			system("clear||cls");
 			cout << jogadorAtual->getNome() << " comprou uma carta!" << endl;
 			cartaComprada = true;
 		}
@@ -175,7 +175,7 @@ void Mesa::gerenciarTurno(Jogador* jogadorAtual){
 			}
 		}
 		else{
-			system("cls||clear");
+			system("clear||cls");
 			cout << "Jogador pulou o turno" << endl;
 		}
 	}
@@ -203,15 +203,15 @@ void Mesa::receberCartaDoJogador(Jogador* jogador, Carta* ultimaDoLixo){
 	// Chama as funções das cartas especiais
 	switch (cartaJogador->getID()){
 	case 10:
-		system("cls||clear");
+		system("clear||cls");
 		efeitoBloquear();
 		break;
 	case 11:
-		system("cls||clear");
+		system("clear||cls");
 		efeitoReverter();
 		break;
 	case 12:
-		system("cls||clear");
+		system("clear||cls");
 		efeitoBloquear();
 		if(!regraTaAtivada("EmpilharComprarCarta")){
 			efeitoComprarCarta(2, this->jogadores[this->posJogadorAtual]);
@@ -223,11 +223,11 @@ void Mesa::receberCartaDoJogador(Jogador* jogador, Carta* ultimaDoLixo){
 		break;
 	case 13:
 		efeitoMudarCor();
-		system("cls||clear");
+		system("clear||cls");
 		break;
 	case 14:
 		efeitoMudarCor();
-		system("cls||clear");
+		system("clear||cls");
 		efeitoBloquear();
 		if(!regraTaAtivada("EmpilharComprarCarta")){
 			efeitoComprarCarta(4, this->jogadores[this->posJogadorAtual]);
@@ -238,7 +238,7 @@ void Mesa::receberCartaDoJogador(Jogador* jogador, Carta* ultimaDoLixo){
 		}
 		break;
 	default:
-		system("cls||clear");
+		system("clear||cls");
 		break;
 	}
 }
@@ -346,7 +346,7 @@ void Mesa::efeitoReverter(){
 // @param numCartas Número de cartas a comprar acumuladas
 // @param jogadorCompra Jogador a comprar o número de cartas
 void Mesa::regraEmpilharCompraCarta(int numCartas, Jogador* jogadorCompra){
-	system("cls||clear");
+	system("clear||cls");
 	Carta* cartaLixo = this->lixo.back();
 	int empilharMais4EmMais2 = regraTaAtivada("+4Em+2");
 	if(regraTaAtivada("+4Em+2")){
@@ -376,7 +376,7 @@ void Mesa::regraEmpilharCompraCarta(int numCartas, Jogador* jogadorCompra){
 			}
 		} while(!(resposta == "s") && !(resposta == "n"));
 
-		system("cls||clear");
+		system("clear||cls");
 
 		// Se o jogador quiser empilhar cartas de compra
 		if(resposta == "s"){

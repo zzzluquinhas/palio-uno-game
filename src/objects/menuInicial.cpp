@@ -6,7 +6,7 @@ MenuInicial::MenuInicial() {
 }
 
 void MenuInicial::menu(){
-	system("cls||clear");
+	system("clear||cls");
 	cout << "- MENU DE INICIO - " << endl;
 	cout << "Escolha uma das opcoes:" << endl;
 	cout << "1 - Iniciar jogo" << endl;
@@ -49,7 +49,7 @@ void MenuInicial::pedirAjuda (){
 }
 
 void MenuInicial::iniciar (){
-	system("cls||clear");
+	system("clear||cls");
 	cout << "O jogo foi iniciado" << endl;
 	cout << "Quantos jogadores vao jogar? *Permitido de 2 a 6 jogadores" << endl;
 	
@@ -96,7 +96,7 @@ void MenuInicial::iniciar (){
 			cout << "Esse jogador já existe." << endl;
 		}
 	}
-	system("cls||clear");
+	system("clear||cls");
 	cout << "Escolha o modo de jogo." << endl;
 	cout << "1 - Modo padrao." << endl;
 	cout << "2 - Modo personalizado" << endl;
@@ -114,7 +114,7 @@ void MenuInicial::iniciar (){
 				switch (stoi(modo)){
 				case 1:
 				{
-					system("cls||clear");
+					system("clear||cls");
 					Mesa* jogo = new Mesa(jogadores, regras); // Falta mesa receber modo de jogo
 					Jogador* ganhador = jogo->gerenciarPartida();
 					delete jogo;
@@ -123,13 +123,13 @@ void MenuInicial::iniciar (){
 				}  
 				
 				case 2:
-					system("cls||clear");
+					system("clear||cls");
 					escolherRegras(stoi(modo));
-					system("cls||clear");
+					system("clear||cls");
 					regrasEmUso();
 					cout << "Digite enter para continuar:";
 					cin.ignore();
-					system("cls||clear");
+					system("clear||cls");
 					Mesa* jogo2 = new Mesa(jogadores, regras); // Falta mesa receber modo de jogo
 					Jogador* ganhador = jogo2->gerenciarPartida();
 					delete jogo2;
@@ -168,7 +168,7 @@ void MenuInicial::escolherRegras(int modoJogo){
 		}
 	} while(!(tolower(resposta) == 's') && !(tolower(resposta) == 'n'));
 	
-	system("cls||clear");
+	system("clear||cls");
 
 	if(tolower(resposta) == 'n'){
 		int cartasTiradas = 0;

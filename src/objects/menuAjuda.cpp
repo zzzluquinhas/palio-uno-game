@@ -6,7 +6,7 @@ menuAjuda::menuAjuda(){
 }
 
 void menuAjuda::menuDeAjuda(){
-	system("cls||clear");
+	system("clear||cls");
 	cout << "- MENU DE AJUDA -" << endl;
 	cout << "Escolha uma das opcoes:" << endl;
 	cout << "1 - Ajuda com modo de jogo padrao." << endl;
@@ -25,7 +25,7 @@ void menuAjuda::menuDeAjuda(){
 	switch (opcao){
 		case '1':
 		{
-			system("cls||clear");
+			system("clear||cls");
 			cout << "Escolha uma das opçoes:" << endl;
 			cout << "1 - Ver regras do modo de jogo padrao." << endl;
 			cout << "2 - Ver cartas do modo de jogo padrao." << endl;
@@ -43,7 +43,7 @@ void menuAjuda::menuDeAjuda(){
 			
 				case '1':
 				{
-					system("cls||clear");
+					system("clear||cls");
 					mostrarRegras(1);
 					cout << "Escolha uma das opcoes:" << endl;
 					cout << "1 - Voltar ao menu de ajuda." << endl;
@@ -72,7 +72,7 @@ void menuAjuda::menuDeAjuda(){
 				}
 				case '2':
 				{
-					system("cls||clear");
+					system("clear||cls");
 					mostrarDescricaoCartas(1);
 					cout << "Escolha uma das opcoes:" << endl;
 					cout << "1 - Voltar ao menu de ajuda." << endl;
@@ -108,7 +108,7 @@ void menuAjuda::menuDeAjuda(){
 		
 		case '2':
 		{
-			system("cls||clear");
+			system("clear||cls");
 			cout << " Escolha uma das opcoes:" << endl;
 			cout << "1 - Ver regras do modo de jogo personalizado." << endl;
 			cout << "2 - Ver cartas do modo de jogo personalizado." << endl;
@@ -125,7 +125,7 @@ void menuAjuda::menuDeAjuda(){
 			switch (opcao){
 				case '1':
 				{
-					system("cls||clear");
+					system("clear||cls");
 					mostrarRegras(2);
 					cout << " Escolha uma das opcoes:" << endl;
 					cout << "1 - Voltar ao menu de ajuda." << endl;
@@ -154,7 +154,7 @@ void menuAjuda::menuDeAjuda(){
 				}
 				case '2':
 				{
-					system("cls||clear");
+					system("clear||cls");
 					mostrarDescricaoCartas(2);
 					cout << " Escolha uma das opcoes:" << endl;
 					cout << "1 - Voltar ao menu de ajuda." << endl;
@@ -197,7 +197,7 @@ void menuAjuda::mostrarRegras(int modoDeJogo){
 	switch (modoDeJogo){
 		case 1:
 		{
-			system("cls||clear");
+			system("clear||cls");
 			cout << "- REGRAS DO JOGO PALIO -\n O conteudo do jogo consiste em 108 cartas de jogo, sendo:" << endl;
 			cout << "\n- 19 Cartas Azuis - 0 a 9.\n- 19 Cartas Verdes - 0 a 9.\n- 19 Cartas Amarelas - 0 a 9." << endl;
 			cout << "- 19 Cartas Vermelhas - 0 a 9.\n- 8 Cartas Comprar Duas Cartas - 2 de cada cor." << endl;
@@ -214,7 +214,7 @@ void menuAjuda::mostrarRegras(int modoDeJogo){
 
 		case 2:
 		{
-			system("cls||clear");
+			system("clear||cls");
 			cout << "- REGRAS DO JOGO PALIO -\n O conteudo do jogo consiste em 108 cartas de jogo, sendo:" << endl;
 			cout << "\n- 19 Cartas Azuis - 0 a 9.\n- 19 Cartas Verdes - 0 a 9.\n- 19 Cartas Amarelas - 0 a 9." << endl;
 			cout << "- 19 Cartas Vermelhas - 0 a 9.\n- 8 Cartas Comprar Duas Cartas - 2 de cada cor." << endl;
@@ -244,7 +244,7 @@ void menuAjuda::mostrarDescricaoCartas(int modoDeJogo){
 	switch (modoDeJogo){
 		case 1:
 		{
-			system("cls||clear");
+			system("clear||cls");
 			cout << "- Comprar Duas Cartas ( +2 ) - Quando esta carta for jogada, o proximo jogador deve " << endl;
 			cout << "comprar 2 cartas e perde a vez. Ela apenas pode ser jogada sobre uma cor que combine." << endl;
 			cout << "\n- Inverter ( S ) - Ao descartar esta carta, o sentido do jogo e invertido (se estiver " <<endl;
@@ -262,7 +262,7 @@ void menuAjuda::mostrarDescricaoCartas(int modoDeJogo){
 
 		case 2:
 		{
-			system("cls||clear");
+			system("clear||cls");
 			cout << "- Comprar Duas Cartas ( +2 ) - Quando esta carta for jogada, o proximo jogador deve " << endl;
 			cout << "comprar 2 cartas e perde a vez. Ela apenas pode ser jogada sobre uma cor que combine." << endl;
 			cout << "\n- Inverter ( S ) - Ao descartar esta carta, o sentido do jogo e invertido (se estiver " <<endl;
