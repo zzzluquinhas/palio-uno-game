@@ -3,6 +3,8 @@
 
 #include "cartaEspecial.hpp"
 #include "cartaNormal.hpp"
+#include "excecoes.hpp"
+#include <regra.hpp>
 
 TEST_CASE("Comparador == entre cartas especiais cor igual"){
 	CartaEspecial c1 = CartaEspecial(6, Cor::VERMELHO);
@@ -263,3 +265,12 @@ TEST_CASE("setDescricaoCarta e getDescricaoCarta"){
 	CHECK(c1.getDescricaoCarta() == "Carta de Teste");
 }
 
+TEST_CASE("Regra - getDescricao"){
+	Regra r1 = Regra("TesteRegra", "Descricao de Teste");
+
+	CHECK(r1.getDescricao() == "Descricao de Teste");
+}
+
+TEST_CASE("Carta Especial +4 cor inválida"){
+	CHECK_THROWS_AS(CartaEspecial(14, Cor::AZUL);, CartaNaoBranca);
+}

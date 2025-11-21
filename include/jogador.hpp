@@ -8,11 +8,10 @@
 #include <limits>
 
 class Jogador{
-	private:
+	public:
 		string nome;
 		vector<Carta*>cartas;
 
-	public:
 		//Contrutor e Destrutor
 		Jogador(string nome);
 		~Jogador();

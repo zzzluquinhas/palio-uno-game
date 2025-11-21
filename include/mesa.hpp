@@ -24,7 +24,9 @@
 	(108 no total)
 */
 class Mesa{
-	private:
+	class MesaFixture;
+	
+	public:
 		bool invertido;
 		int numCartasBaralho;
 		unsigned int posJogadorAtual;
@@ -33,7 +35,6 @@ class Mesa{
 		vector<Carta*> lixo;
 		vector<Regra*> regras;
 
-	public:
 		~Mesa();
 		Mesa(vector<Jogador*> jogadores, vector<Regra*> regras);
 		

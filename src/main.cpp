@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]){
 	// 		players.push_back(temp);
 	// 	}
 
-	// 	system("cls||clear");
+	// 	system("clear||cls");
 
 	// 	Mesa* jogo = new Mesa(players);
 	// 	Jogador* ganhador = jogo->gerenciarPartida();

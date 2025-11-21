@@ -8,6 +8,7 @@ class Carta{
 		int id;
 		string descricaoCarta;
 		Cor::Modificador cor;
+		friend class CartaMock;
 
 	public:
 		Carta();
