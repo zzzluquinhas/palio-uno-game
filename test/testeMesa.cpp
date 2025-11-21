@@ -82,6 +82,16 @@ public:
         }
         this->numCartasBaralho = this->baralho.size();
     }
+
+	// Expõe a lógica de turno (linhas 152-183)
+    void gerenciarTurnoPublic(Jogador* j) {
+        gerenciarTurno(j);
+    }
+
+    // Expõe a lógica de decisão de compra (linhas 286-291)
+    bool jogadorQuerCartaPublic(Jogador* j, Carta* lixo) {
+        return jogadorQuerCarta(j, lixo);
+    }
 };
 
 // Subclass Jogador to mock responses for card stacking tests
@@ -311,7 +321,7 @@ DOCTEST_TEST_SUITE("Mesa Class Tests") {
         CHECK(j->getNumeroDeCartas() == 3);
         CHECK(mesa.getNumCartasBaralho() == 0);
     }
-	
+
     // ====================================
     // Testes de Efeitos de Cartas (receberCartaDoJogador)
     // ====================================
@@ -415,4 +425,129 @@ DOCTEST_TEST_SUITE("Mesa Class Tests") {
         CHECK(mesa.getNumCartasBaralho() == 0);
         CHECK(mesa.getLixo().back()->getCor() == Cor::VERDE);
     }
+
+	DOCTEST_TEST_SUITE("Mesa Class Tests - Cobertura Estendida") {
+
+		// Cobertura: linhas 240-242 (Switch default em receberCartaDoJogador)
+		DOCTEST_TEST_CASE_FIXTURE(MesaFixture, "25 - receberCartaDoJogador - Default Case (Carta Normal)") {
+			MesaControlada mesa(jogadores, regras);
+			mesa.setPosJogadorAtual(0);
+			mesa.moverProLixoPublic(new CartaNormal(1, Cor::VERMELHO)); // Lixo inicial
+
+			// Jogador joga uma carta normal (ID 5)
+			JogadorStacker* j = new JogadorStacker("NormalPlayer");
+			j->adicionarCarta(new CartaNormal(5, Cor::VERMELHO));
+			
+			CIN_Redirect redirect("0\n"); // Escolhe índice 0
+			
+			delete jogadores[0];
+			jogadores[0] = j;
+
+			// Executa
+			mesa.receberCartaDoJogador(j, mesa.getLixo().front());
+
+			// Verifica se caiu no default (nada acontece além de jogar a carta)
+			CHECK(mesa.getLixo().back()->getID() == 5);
+			CHECK(mesa.getPosJogadorAtual() == 0); // Não avançou aqui, quem avança é o loop principal, mas verificamos que não pulou (efeitoBloquear)
+		}
+
+		// Cobertura: linhas 220-221 (Switch case 12 com Regra Empilhar Ativa)
+		DOCTEST_TEST_CASE_FIXTURE(MesaFixture, "26 - receberCartaDoJogador - ID 12 (+2) com Regra Empilhar") {
+			regras.push_back(new Regra("EmpilharComprarCarta", "Ativada"));
+			MesaControlada mesa(jogadores, regras);
+			
+			// Preparação
+			mesa.moverProLixoPublic(new CartaNormal(1, Cor::VERMELHO));
+			JogadorStacker* j = new JogadorStacker("StackerInit");
+			j->adicionarCarta(new CartaEspecial(12, Cor::VERMELHO)); // +2
+			j->podeJogarMais2 = true; // Permite simular logica interna
+			
+			// Mock para a RECURSÃO: quando entrar em regraEmpilhar, o jogador vai decidir NÃO empilhar ('n')
+			// O input "0" é para jogar a carta inicial. O "n" é para a pergunta de empilhar.
+			CIN_Redirect redirect("0\nn\n"); 
+			
+			delete jogadores[0];
+			jogadores[0] = j;
+
+			// Executa
+			mesa.receberCartaDoJogador(j, mesa.getLixo().front());
+
+			// Se chegou aqui sem crash e o lixo é +2, a lógica de switch desviou corretamente para regraEmpilhar
+			CHECK(mesa.getLixo().back()->getID() == 12);
+		}
+
+		// Cobertura: linhas 236-237 (Switch case 14 com Regra Empilhar Ativa)
+		DOCTEST_TEST_CASE_FIXTURE(MesaFixture, "27 - receberCartaDoJogador - ID 14 (+4) com Regra Empilhar") {
+			regras.push_back(new Regra("EmpilharComprarCarta", "Ativada"));
+			MesaControlada mesa(jogadores, regras);
+			
+			mesa.moverProLixoPublic(new CartaNormal(1, Cor::VERMELHO));
+			JogadorStacker* j = new JogadorStacker("StackerInit4");
+			j->adicionarCarta(new CartaEspecial(14, Cor::BRANCO)); 
+			j->podeJogarMais4 = true;
+			
+			// Input: 0 (índice carta), 1 (escolha cor VERDE), n (não empilhar na recursão)
+			CIN_Redirect redirect("0\n1\nn\n"); 
+			
+			delete jogadores[0];
+			jogadores[0] = j;
+
+			mesa.receberCartaDoJogador(j, mesa.getLixo().front());
+
+			CHECK(mesa.getLixo().back()->getID() == 14);
+			CHECK(mesa.getLixo().back()->getCor() == Cor::VERDE);
+		}
+
+		// Cobertura: linhas 373-375 (Input inválido no loop do/while da regra empilhar)
+		// Cobertura: linhas 382-385 (Escolha 's' para +2)
+		DOCTEST_TEST_CASE_FIXTURE(MesaFixture, "28 - regraEmpilharCompraCarta - Inputs Invalidos e Empilhamento de +2") {
+			regras.push_back(new Regra("EmpilharComprarCarta", "Ativada"));
+			MesaControlada mesa(jogadores, regras);
+			
+			mesa.moverProLixoPublic(new CartaEspecial(12, Cor::AZUL)); // Carta no lixo é +2
+
+			JogadorStacker* j = new JogadorStacker("StackerRecursive");
+			j->adicionarCarta(new CartaEspecial(12, Cor::AZUL)); // Tem outro +2
+			j->podeJogarMais2 = true;
+
+			// Input: "x" (invalido), "y" (invalido), "s" (sim), "0" (indice da carta a jogar)
+			CIN_Redirect redirect("x\ny\ns\n0\nn\n"); 
+			// O ultimo 'n' é para o PROXIMO jogador na recursão parar de empilhar
+			
+			delete jogadores[0];
+			jogadores[0] = j;
+
+			// Chama a regra com acumulado de 2
+			mesa.regraEmpilharCompraCartaPublic(2, j);
+
+			CHECK(j->getNumeroDeCartas() == 0); // Jogou a carta
+			CHECK(mesa.getLixo().back()->getID() == 12);
+		}
+		
+		// Cobertura: linhas 288-289 (Regra CompraOpcional e resposta positiva/negativa)
+		DOCTEST_TEST_CASE_FIXTURE(MesaFixture, "30 - jogadorQuerCarta - Regra CompraOpcional") {
+			regras.push_back(new Regra("CompraOpcional", "Ativada"));
+			MesaControlada mesa(jogadores, regras);
+			
+			CartaNormal* lixo = new CartaNormal(1, Cor::VERMELHO);
+			
+			// Jogador tem carta válida (Cor igual), mas regra permite comprar
+			JogadorStacker* j = new JogadorStacker("Buyer");
+			j->adicionarCarta(new CartaNormal(2, Cor::VERMELHO)); // Válida
+			
+			// Caso 1: Quer comprar ('s')
+			{
+				CIN_Redirect redirect("s\n");
+				CHECK(mesa.jogadorQuerCartaPublic(j, lixo) == true);
+			}
+			
+			// Caso 2: Não quer comprar ('n')
+			{
+				CIN_Redirect redirect("n\n");
+				CHECK(mesa.jogadorQuerCartaPublic(j, lixo) == false);
+			}
+			
+			delete lixo;
+		}
+	}
 }
