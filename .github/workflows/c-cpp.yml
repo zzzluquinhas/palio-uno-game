@@ -55,10 +55,10 @@ jobs:
         # O comando gcovr usa caminhos relativos ao diretório atual (./test)
         # Para acessar o diretório de build (../build) e os arquivos fonte (../src/objects)
         echo "Gerando resumo de cobertura..."
-        gcovr --print-summary ../build -r ../src/objects
+        gcovr --print-summary ../build -r ../src/objects --exclude "../src/objects/menuInicial.cpp" --exclude "../src/objects/menuAjuda.cpp"
         
         # Opcional: Gerar um relatório XML para publicação
-        gcovr --xml --output coverage.xml ../build -r ../src/objects
+        gcovr --xml --output coverage.xml ../build -r ../src/objects --exclude "../src/objects/menuInicial.cpp" --exclude "../src/objects/menuAjuda.cpp"
 
     # --- Etapa Opcional: Publicar o Relatório de Cobertura ---
     - name: 📤 Publicar Cobertura
@@ -68,3 +68,5 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: ./test/coverage.xml
         fail_ci_if_error: true
+
+        
