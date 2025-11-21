@@ -272,5 +272,5 @@ TEST_CASE("Regra - getDescricao"){
 }
 
 TEST_CASE("Carta Especial +4 cor inválida"){
-	CHECK_THROWS_AS(CartaEspecial(14, Cor::AZUL);, CartaNaoBranca);
+	CHECK_THROWS_AS(CartaEspecial(14, Cor::VERMELHO), CartaNaoBranca);
 }

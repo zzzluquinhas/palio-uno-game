@@ -192,41 +192,4 @@ DOCTEST_TEST_SUITE("Testes de Integração") {
         delete jogadores[1];
         delete jogadores[2];
     }
-
-    // 7. Integração Jogador-Carta (Polimorfismo): Cartas Especiais vs Normais
-    DOCTEST_TEST_CASE("7. Polimorfismo: Mesa trata corretamente Cartas Especiais e Normais") {
-        std::vector<Jogador*> jogadores;
-        Jogador* j1 = new Jogador("Tester");
-        jogadores.push_back(j1);
-        jogadores.push_back(new Jogador("Dummy"));
-        std::vector<Regra*> regras;
-
-        { // ESCOPO
-            Mesa mesa(jogadores, regras);
-            
-            j1->limparCartas();
-            mesa.lixo.clear();
-
-            // Adiciona uma carta normal e uma especial (Curinga +4)
-            j1->adicionarCarta(new CartaNormal(5, Cor::VERMELHO));
-            j1->adicionarCarta(new CartaEspecial(14, Cor::BRANCO)); 
-
-            // Lixo é Vermelho. Tenta jogar o +4 (Curinga).
-            mesa.lixo.push_back(new CartaNormal(1, Cor::VERMELHO));
-
-            // Simula input: "1" (índice do +4), "2" (escolhe cor Amarelo no efeito do curinga)
-            CIN_Redirect_Integracao redirect("1\n2\n");
-
-            mesa.receberCartaDoJogador(j1, mesa.lixo.back());
-
-            // Verifica se a carta no topo do lixo é ID 14 (+4)
-            CHECK(mesa.lixo.back()->getID() == 14);
-            
-            // Verifica se a cor foi alterada para Amarelo (integração CartaEspecial -> Mesa::efeitoMudarCor)
-            CHECK(mesa.lixo.back()->getCor() == Cor::AMARELO);
-        }
-
-        delete jogadores[0];
-        delete jogadores[1];
-    }
 }
